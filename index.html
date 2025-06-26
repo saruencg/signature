@@ -197,24 +197,7 @@
         /* STYLES POUR L'APERÇU DE LA SIGNATURE */
         .email-signature { font-family: Arial, sans-serif; font-size: 14px; color: #000; }
         .email-signature table { border-collapse: collapse; margin: 0; padding: 0; }
-        .email-signature img.pfp-image { border-radius: 8px; }
         .placeholder-text { color: #999; font-style: italic; }
-
-        .pfp-placeholder {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: #e9e9f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .pfp-placeholder svg {
-            width: 40px;
-            height: 40px;
-            fill: #a0a0c0;
-        }
-
 
         .success-message {
             background: #d4edda;
@@ -287,7 +270,6 @@
                 <div class="form-group"><label for="jobTitle">Intitulé du poste *</label><input type="text" id="jobTitle" placeholder="ex: Assistant Marketing Digital" required></div>
                 <div class="form-group"><label for="phone1">Téléphone principal</label><input type="tel" id="phone1" placeholder="ex: +33 6 09 30 14 05"></div>
                 <div class="form-group"><label for="phone2">Téléphone secondaire</label><input type="tel" id="phone2" placeholder="ex: +33 1 09 30 14 05"></div>
-                <div class="form-group"><label for="profileImage">URL de l'image de profil</label><input type="url" id="profileImage" placeholder="https://exemple.com/profil.png"></div>
                 <div class="form-group"><label for="meetingRoom">URL de la salle de réunion OpenRainbow</label><input type="url" id="meetingRoom" value="https://web.openrainbow.com/..." placeholder="https://web.openrainbow.com/rb/..."></div>
                 <button class="btn generate-button" id="generateButton">🚀 Générer le code HTML</button>
             </div>
@@ -299,11 +281,6 @@
                         <table cellpadding="0" cellspacing="0">
                             <tbody>
                                 <tr>
-                                    <td style="padding-right:15px; vertical-align: top;" id="preview-pfp-container">
-                                        <div class="pfp-placeholder">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
-                                        </div>
-                                    </td>
                                     <td style="vertical-align: top;">
                                         <strong style="font-size:16px; color:#1a1a1a;" id="preview-name" class="placeholder-text">[Votre Nom Complet]</strong><br>
                                         <span style="color:#555;" id="preview-title" class="placeholder-text">[Votre Intitulé de Poste]</span><br>
@@ -354,15 +331,11 @@
             const copyButton = document.getElementById('copyButton');
             let generatedSignatureHTML = '';
 
-            const pfpContainer = document.getElementById('preview-pfp-container');
-            const defaultPfpHTML = pfpContainer.innerHTML;
-
             function updatePreview() {
                 const fullName = document.getElementById('fullName').value.trim();
                 const jobTitle = document.getElementById('jobTitle').value.trim();
                 const phone1 = document.getElementById('phone1').value.trim();
                 const phone2 = document.getElementById('phone2').value.trim();
-                const profileImage = document.getElementById('profileImage').value.trim();
                 const meetingRoom = document.getElementById('meetingRoom').value.trim();
 
                 // Mettre à jour le nom
@@ -380,13 +353,6 @@
                 document.getElementById('preview-phone1-container').style.display = phone1 ? 'inline' : 'none';
                 document.getElementById('preview-phone2').textContent = phone2;
                 document.getElementById('preview-phone2-container').style.display = phone2 ? 'inline' : 'none';
-
-                // Mettre à jour l'image de profil
-                if (profileImage) {
-                    pfpContainer.innerHTML = `<img src="${profileImage}" alt="Profile" width="80" class="pfp-image">`;
-                } else {
-                    pfpContainer.innerHTML = defaultPfpHTML;
-                }
                 
                 // Mettre à jour le lien Rainbow
                 const rainbowContainer = document.getElementById('preview-rainbow-container');
@@ -409,13 +375,6 @@
                     debounceTimer = setTimeout(updatePreview, 300);
                 });
             });
-
-            // Action du bouton "Générer" (qui devient maintenant juste un "préparateur" pour la copie)
-            //document.getElementById('generateButton').addEventListener('click', () => {
-            //    generatedSignatureHTML = document.getElementById('signaturePreview').innerHTML;
-            //    alert('Code HTML prêt à être copié !');
-            //    copyButton.click();
-            //});
 
             // Action du bouton "Copier"
             copyButton.addEventListener('click', async () => {
@@ -462,22 +421,22 @@
                 {
                     title: "Première étape : Nommer la bulle",
                     description: "Donnez un nom et un sujet (optionnel) à votre nouvelle bulle, puis cliquez sur 'Suivant'.",
-                    imgSrc: "name.png" // REMPLACEZ PAR VOTRE LIEN
+                    imgSrc: "name.png"
                 },
                 {
                     title: "Deuxième étape : Inviter des participants",
                     description: "Recherchez et ajoutez les membres de votre équipe ou des contacts externes à votre bulle (Dans notre cas, aucune personne ne sera ajoutée).",
-                    imgSrc: "add.png" // REMPLACEZ PAR VOTRE LIEN
+                    imgSrc: "add.png"
                 },
                 {
                     title: "Troisième étape : Accéder aux paramètres",
                     description: "Ouvrez le menu des options (•••), puis sélectionnez 'Paramètres de cette bulle'. Apres 'Nettoyer la bulle'",
-                    imgSrc: "clean.png" // REMPLACEZ PAR VOTRE LIEN
+                    imgSrc: "clean.png"
                 },
                 {
                     title: "Quatrième étape : Obtenir le lien de partage",
                     description: "Dans l'onglet 'Partager', copiez le lien public pour l'ajouter à votre signature.",
-                    imgSrc: "attente.png" // REMPLACEZ PAR VOTRE LIEN
+                    imgSrc: "attente.png"
                 }
             ];
 
