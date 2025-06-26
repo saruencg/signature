@@ -383,10 +383,17 @@
                     alert('Veuillez d\'abord remplir les champs.');
                     return;
                 }
+                
                 try {
-                    const blob = new Blob([generatedSignatureHTML], { type: 'text/html' });
-                    const clipboardItem = new ClipboardItem({ 'text/html': blob });
-                    await navigator.clipboard.write([clipboardItem]);
+                    // Méthode 1: Essayer avec ClipboardItem (pour les navigateurs qui le supportent)
+                    if (typeof ClipboardItem !== 'undefined') {
+                        const blob = new Blob([generatedSignatureHTML], { type: 'text/html' });
+                        const clipboardItem = new ClipboardItem({ 'text/html': blob });
+                        await navigator.clipboard.write([clipboardItem]);
+                    } else {
+                        // Méthode 2: Fallback avec writeText (plus compatible)
+                        await navigator.clipboard.writeText(generatedSignatureHTML);
+                    }
                     
                     const successMessage = document.getElementById('successMessage');
                     copyButton.textContent = '✅ Copié !';
@@ -400,7 +407,33 @@
                     }, 3000);
                 } catch (err) {
                     console.error('Erreur de copie: ', err);
-                    alert('La copie a échoué. Veuillez essayer manuellement.');
+                    // Méthode 3: Fallback manuel avec sélection de texte
+                    try {
+                        const textArea = document.createElement('textarea');
+                        textArea.value = generatedSignatureHTML;
+                        textArea.style.position = 'fixed';
+                        textArea.style.left = '-999999px';
+                        textArea.style.top = '-999999px';
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        
+                        const successMessage = document.getElementById('successMessage');
+                        copyButton.textContent = '✅ Copié !';
+                        copyButton.classList.add('copied');
+                        successMessage.style.display = 'block';
+                        
+                        setTimeout(() => {
+                            copyButton.textContent = '📋 Copier le code HTML';
+                            copyButton.classList.remove('copied');
+                            successMessage.style.display = 'none';
+                        }, 3000);
+                    } catch (fallbackErr) {
+                        console.error('Erreur de copie fallback: ', fallbackErr);
+                        alert('La copie automatique a échoué. Voici le code à copier manuellement:\n\n' + generatedSignatureHTML);
+                    }
                 }
             });
 
