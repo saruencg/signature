@@ -385,14 +385,37 @@
                 }
                 
                 try {
-                    // Méthode 1: Essayer avec ClipboardItem (pour les navigateurs qui le supportent)
-                    if (typeof ClipboardItem !== 'undefined') {
-                        const blob = new Blob([generatedSignatureHTML], { type: 'text/html' });
-                        const clipboardItem = new ClipboardItem({ 'text/html': blob });
+                    // Méthode 1: Copier en tant que HTML formaté
+                    if (navigator.clipboard && window.ClipboardItem) {
+                        const htmlBlob = new Blob([generatedSignatureHTML], { type: 'text/html' });
+                        const textBlob = new Blob([generatedSignatureHTML], { type: 'text/plain' });
+                        const clipboardItem = new ClipboardItem({
+                            'text/html': htmlBlob,
+                            'text/plain': textBlob
+                        });
                         await navigator.clipboard.write([clipboardItem]);
                     } else {
-                        // Méthode 2: Fallback avec writeText (plus compatible)
-                        await navigator.clipboard.writeText(generatedSignatureHTML);
+                        // Méthode 2: Fallback avec sélection directe du contenu HTML
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = generatedSignatureHTML;
+                        tempDiv.style.position = 'fixed';
+                        tempDiv.style.left = '-9999px';
+                        tempDiv.style.top = '-9999px';
+                        document.body.appendChild(tempDiv);
+                        
+                        const range = document.createRange();
+                        range.selectNodeContents(tempDiv);
+                        const selection = window.getSelection();
+                        selection.removeAllRanges();
+                        selection.addRange(range);
+                        
+                        const success = document.execCommand('copy');
+                        document.body.removeChild(tempDiv);
+                        selection.removeAllRanges();
+                        
+                        if (!success) {
+                            throw new Error('Copy command failed');
+                        }
                     }
                     
                     const successMessage = document.getElementById('successMessage');
@@ -407,35 +430,55 @@
                     }, 3000);
                 } catch (err) {
                     console.error('Erreur de copie: ', err);
-                    // Méthode 3: Fallback manuel avec sélection de texte
-                    try {
-                        const textArea = document.createElement('textarea');
-                        textArea.value = generatedSignatureHTML;
-                        textArea.style.position = 'fixed';
-                        textArea.style.left = '-999999px';
-                        textArea.style.top = '-999999px';
-                        document.body.appendChild(textArea);
-                        textArea.focus();
-                        textArea.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(textArea);
-                        
-                        const successMessage = document.getElementById('successMessage');
-                        copyButton.textContent = '✅ Copié !';
-                        copyButton.classList.add('copied');
-                        successMessage.style.display = 'block';
-                        
-                        setTimeout(() => {
-                            copyButton.textContent = '📋 Copier le code HTML';
-                            copyButton.classList.remove('copied');
-                            successMessage.style.display = 'none';
-                        }, 3000);
-                    } catch (fallbackErr) {
-                        console.error('Erreur de copie fallback: ', fallbackErr);
-                        alert('La copie automatique a échoué. Voici le code à copier manuellement:\n\n' + generatedSignatureHTML);
-                    }
+                    // Méthode 3: Copie manuelle avec instructions
+                    showManualCopyInstructions();
                 }
             });
+
+            // Fonction pour afficher les instructions de copie manuelle
+            function showManualCopyInstructions() {
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                    background: rgba(0,0,0,0.7); z-index: 10000; display: flex;
+                    justify-content: center; align-items: center; padding: 20px;
+                `;
+                
+                const content = document.createElement('div');
+                content.style.cssText = `
+                    background: white; padding: 30px; border-radius: 10px; max-width: 500px;
+                    text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                `;
+                
+                content.innerHTML = `
+                    <h3 style="color: #5726B6; margin-bottom: 20px;">Copie manuelle requise</h3>
+                    <p style="margin-bottom: 20px; color: #555;">
+                        Pour copier votre signature avec le formatage HTML, veuillez suivre ces étapes:
+                    </p>
+                    <ol style="text-align: left; margin-bottom: 20px; color: #555;">
+                        <li>Sélectionnez tout le contenu dans l'aperçu ci-dessous avec votre souris</li>
+                        <li>Faites Ctrl+C (ou Cmd+C sur Mac) pour copier</li>
+                        <li>Collez directement dans Outlook ou votre client email</li>
+                    </ol>
+                    <button id="closeManualModal" style="
+                        background: #5726B6; color: white; border: none; padding: 10px 20px;
+                        border-radius: 5px; cursor: pointer; font-size: 16px;
+                    ">Compris</button>
+                `;
+                
+                modal.appendChild(content);
+                document.body.appendChild(modal);
+                
+                document.getElementById('closeManualModal').onclick = () => {
+                    document.body.removeChild(modal);
+                };
+                
+                modal.onclick = (e) => {
+                    if (e.target === modal) {
+                        document.body.removeChild(modal);
+                    }
+                };
+            }
 
             // Lancer une première mise à jour pour cacher les éléments optionnels vides
             updatePreview();
