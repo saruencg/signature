@@ -91,6 +91,43 @@
             border: 2px solid #e0e7ff;
         }
 
+        .language-selector {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 2px solid #e0e7ff;
+            flex-wrap: wrap;
+        }
+
+        .language-selector label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .language-selector select {
+            padding: 8px 15px;
+            border: 2px solid #e0e7ff;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .language-selector select:focus {
+            outline: none;
+            border-color: #5726B6;
+            box-shadow: 0 0 0 3px rgba(87, 38, 182, 0.1);
+        }
+
         .form-section h2, .preview-section h2 {
             color: #5726B6;
             margin-bottom: 25px;
@@ -199,14 +236,7 @@
         .email-signature table { border-collapse: collapse; margin: 0; padding: 0; }
         .placeholder-text { color: #999; font-style: italic; }
 
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-top: 10px;
-            display: none;
-        }
+
 
         /* STYLES POUR LE TUTORIEL MODAL */
         .modal-overlay {
@@ -220,6 +250,8 @@
             background: #fff; border-radius: 15px; padding: 20px; position: relative;
             max-width: 800px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             transform: scale(0.95); transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .modal-overlay.active .modal-content { transform: scale(1); }
         .modal-close-btn {
@@ -236,7 +268,7 @@
             max-width: 100%; max-height: 55vh; object-fit: contain; border-radius: 8px;
             border: 1px solid #ddd; background-color: #f9f9f9;
         }
-        .slider-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .slider-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; flex-wrap: wrap; gap: 10px; }
         .slider-nav button {
             background-color: #5726B6; color: white; border: none; border-radius: 8px;
             width: 120px; padding: 10px 15px; font-size: 16px; cursor: pointer; transition: background-color 0.2s;
@@ -244,38 +276,190 @@
         .slider-nav button:hover { background-color: #4a1a9e; }
         #slideCounter { color: #777; font-weight: bold; }
 
-        @media (max-width: 992px) { .main-content { grid-template-columns: 1fr; } }
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 992px) { 
+            .main-content { 
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px 20px;
+            }
+            
+            .form-section, .preview-section {
+                padding: 25px 20px;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .header { flex-direction: column; padding: 20px; }
-            .header-logo { height: 35px; margin-bottom: 15px; }
-            .header h1 { font-size: 1.8rem; }
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 15px;
+            }
+            
+            .header { 
+                flex-direction: column; 
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .header-logo { 
+                height: 35px;
+            }
+            
+            .header h1 { 
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            
+            .header p {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+            
+            .main-content {
+                padding: 20px 15px;
+                gap: 20px;
+            }
+            
+            .form-section h2, .preview-section h2 {
+                font-size: 1.4rem;
+            }
+            
+            .signature-preview {
+                padding: 15px;
+                overflow-x: auto;
+            }
+            
+            .btn {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+            
+            .generate-button {
+                padding: 12px 20px;
+            }
+            
+            .toast {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: calc(100vw - 20px);
+            }
+            .language-selector {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            
+            .language-selector label {
+                text-align: left;
+            }
+            
+            .language-selector select {
+                width: 100%;
+            }
+            
+            .modal-content {
+                padding: 15px;
+                max-height: 95vh;
+            }
+            
+            .slide h4 {
+                font-size: 1.2rem;
+            }
+            
+            .slide p {
+                font-size: 0.9rem;
+            }
+            
+            .slider-nav button {
+                width: 100px;
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .header p {
+                font-size: 0.85rem;
+            }
+            
+            .form-section, .preview-section {
+                padding: 20px 15px;
+            }
+            
+            .form-section h2, .preview-section h2 {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+            
+            .instructions, .tutorial-section {
+                padding: 15px;
+            }
+            
+            .instructions h3, .tutorial-section h3 {
+                font-size: 1rem;
+            }
+            
+            .instructions p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="rainbow-logo.png" alt="Logo Rainbow" class="header-logo">
+            <img src="img/rainbow-logo.png" alt="Logo Rainbow" class="header-logo">
             <div class="header-text">
-                <h1>Générateur d'email de signature dynamique</h1>
-                <p>Générez une signature dynamique, obtenez une ligne directe avec vos clients, via Rainbow.</p>
+                <h1 id="headerTitle">Générateur d'email de signature dynamique</h1>
+                <p id="headerSubtitle">Générez une signature dynamique, obtenez une ligne directe avec vos clients, via Rainbow.</p>
             </div>
-            <img src="ale.png" alt="Logo Alcatel-Lucent Enterprise" class="header-logo">
+            <img src="img/ale.png" alt="Logo Alcatel-Lucent Enterprise" class="header-logo">
         </div>
         
         <div class="main-content">
             <div class="form-section">
-                <h2>👤 Informations personnelles</h2>
-                <div class="form-group"><label for="fullName">Nom complet *</label><input type="text" id="fullName" placeholder="ex: Youssef El Mansouri" required></div>
-                <div class="form-group"><label for="jobTitle">Intitulé du poste *</label><input type="text" id="jobTitle" placeholder="ex: Assistant Marketing Digital" required></div>
-                <div class="form-group"><label for="phone1">Téléphone principal</label><input type="tel" id="phone1" placeholder="ex: +33 6 09 30 14 05"></div>
-                <div class="form-group"><label for="phone2">Téléphone secondaire</label><input type="tel" id="phone2" placeholder="ex: +33 1 09 30 14 05"></div>
-                <div class="form-group"><label for="meetingRoom">URL de la salle de réunion OpenRainbow</label><input type="url" id="meetingRoom" value="https://web.openrainbow.com/..." placeholder="https://web.openrainbow.com/rb/..."></div>
-                <button class="btn generate-button" id="generateButton">🚀 Générer le code HTML</button>
+                <div class="language-selector">
+                    <label for="languageSelect" id="languageLabel">Choisissez votre langue :</label>
+                    <select id="languageSelect">
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                        <option value="de">Deutsch</option>
+                    </select>
+                </div>
+                
+                <h2 id="formTitle">👤 Informations personnelles</h2>
+                <div class="form-group">
+                    <label for="fullName" id="labelName">Nom complet *</label>
+                    <input type="text" id="fullName" placeholder="ex: Youssef El Mansouri" required>
+                </div>
+                <div class="form-group">
+                    <label for="jobTitle" id="labelJob">Intitulé du poste *</label>
+                    <input type="text" id="jobTitle" placeholder="ex: Assistant Marketing Digital" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone1" id="labelPhone">Téléphone principal</label>
+                    <input type="tel" id="phone1" placeholder="ex: +33 6 09 30 14 05">
+                </div>
+                <div class="form-group">
+                    <label for="email" id="labelEmail">Email</label>
+                    <input type="email" id="email" placeholder="ex: youssef@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="meetingRoom" id="labelMeeting">URL de la salle de réunion OpenRainbow</label>
+                    <input type="url" id="meetingRoom" value="https://web.openrainbow.com/..." placeholder="https://web.openrainbow.com/rb/...">
+                </div>
             </div>
             
             <div class="preview-section">
-                <h2>📋 Aperçu en direct</h2>
+                <h2 id="previewTitle">📋 Aperçu en direct</h2>
                 <div class="signature-preview">
                     <div class="email-signature" id="signaturePreview">
                         <table cellpadding="0" cellspacing="0">
@@ -285,7 +469,7 @@
                                         <strong style="font-size:16px; color:#1a1a1a;" id="preview-name" class="placeholder-text">[Votre Nom Complet]</strong><br>
                                         <span style="color:#555;" id="preview-title" class="placeholder-text">[Votre Intitulé de Poste]</span><br>
                                         <span style="color:#5726B6; display: none;" id="preview-phone1-container">Tél: <span id="preview-phone1"></span><br></span>
-                                        <span style="color:#5726B6; display: none;" id="preview-phone2-container">Tél: <span id="preview-phone2"></span><br></span>
+                                        <span style="color:#5726B6; display: none;" id="preview-email-container">Email: <span id="preview-email"></span><br></span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -298,15 +482,15 @@
                     </div>
                 </div>
                 
-                <button class="btn copy-button" id="copyButton" disabled>📋 Copier le code HTML</button>
-                <div class="success-message" id="successMessage">✅ Code copié ! Vous pouvez le coller dans votre client de messagerie.</div>
+                <button class="btn copy-button" id="copyButton" disabled><span id="btnCopy">📋 Copier le code HTML</span></button>
+                
                 <div class="instructions">
-                    <h3>Comment utiliser dans Outlook :</h3>
-                    <p>1. Copiez la signature à l'aide du bouton ci-dessus<br>2. Ouvrez Outlook → Fichier → Options → Courrier → Signatures<br>3. Créez une nouvelle signature et collez le code HTML<br>4. Définir par défaut pour les nouveaux messages et les réponses</p>
+                    <h3 id="instructionsTitle">Comment utiliser dans Outlook :</h3>
+                    <p id="instructionsText">1. Copiez la signature à l'aide du bouton ci-dessus<br>2. Ouvrez Outlook → Fichier → Options → Courrier → Signatures<br>3. Créez une nouvelle signature et collez le code HTML<br>4. Définir par défaut pour les nouveaux messages et les réponses</p>
                 </div>
                 <div class="tutorial-section">
-                    <h3>Comment créer une bulle Rainbow ?</h3>
-                    <button class="btn tutorial-button" id="openTutorialBtn">Voir le tutoriel</button>
+                    <h3 id="tutorialTitle">Comment créer une bulle Rainbow ?</h3>
+                    <button class="btn tutorial-button" id="openTutorialBtn"><span id="btnTutorial">Voir le tutoriel</span></button>
                 </div>
             </div>
         </div>
@@ -325,36 +509,205 @@
     </div>
 
     <script>
+        // TRANSLATIONS
+        const translations = {
+            fr: {
+                headerTitle: "Générateur d'email de signature dynamique",
+                headerSubtitle: "Générez une signature dynamique, obtenez une ligne directe avec vos clients, via Rainbow.",
+                languageLabel: "Choisissez votre langue :",
+                formTitle: "👤 Informations personnelles",
+                labelName: "Nom complet *",
+                labelJob: "Intitulé du poste *",
+                labelPhone: "Téléphone principal",
+                labelEmail: "Email",
+                labelMeeting: "URL de la salle de réunion OpenRainbow",
+                btnGenerate: "Générer le code HTML",
+                previewTitle: "📋 Aperçu en direct",
+                placeholderName: "[Votre Nom Complet]",
+                placeholderJob: "[Votre Intitulé de Poste]",
+                btnCopy: "📋 Copier le code HTML",
+                btnCopied: "✅ Copié !",
+                instructionsTitle: "Comment utiliser dans Outlook :",
+                instructionsText: "1. Copiez la signature à l'aide du bouton ci-dessus<br>2. Ouvrez Outlook → Fichier → Options → Courrier → Signatures<br>3. Créez une nouvelle signature et collez le code HTML<br>4. Définir par défaut pour les nouveaux messages et les réponses",
+                tutorialTitle: "Comment créer une bulle Rainbow ?",
+                btnTutorial: "Voir le tutoriel",
+                slidePrev: "Précédent",
+                slideNext: "Suivant",
+                tutorialSlides: [
+                    {
+                        title: "Première étape : Nommer la bulle",
+                        description: "Donnez un nom et un sujet (optionnel) à votre nouvelle bulle, puis cliquez sur 'Suivant'."
+                    },
+                    {
+                        title: "Deuxième étape : Inviter des participants",
+                        description: "Recherchez et ajoutez les membres de votre équipe ou des contacts externes à votre bulle (Dans notre cas, aucune personne ne sera ajoutée)."
+                    },
+                    {
+                        title: "Troisième étape : Accéder aux paramètres",
+                        description: "Ouvrez le menu des options (•••), puis sélectionnez 'Paramètres de cette bulle'. Apres 'Nettoyer la bulle'"
+                    },
+                    {
+                        title: "Quatrième étape : Nettoyage automatique",
+                        description: "Dans l'onglet Nettoyage Automatique, pensez à cocher l'activation du nettoyage automatique."
+                    },
+                    {
+                        title: "Cinquième étape : Obtenir le lien de partage",
+                        description: "Dans l'onglet 'Partager', copiez le lien public pour l'ajouter à votre signature."
+                    }
+                ]
+            },
+            en: {
+                headerTitle: "Dynamic Email Signature Generator",
+                headerSubtitle: "Generate a dynamic signature, get a direct line with your customers, via Rainbow.",
+                languageLabel: "Choose your language:",
+                formTitle: "👤 Personal Information",
+                labelName: "Full Name *",
+                labelJob: "Job Title *",
+                labelPhone: "Primary Phone",
+                labelEmail: "Email",
+                labelMeeting: "OpenRainbow Meeting Room URL",
+                btnGenerate: "Generate HTML Code",
+                previewTitle: "📋 Live Preview",
+                placeholderName: "[Your Full Name]",
+                placeholderJob: "[Your Job Title]",
+                btnCopy: "📋 Copy HTML Code",
+                btnCopied: "✅ Copied!",
+                instructionsTitle: "How to use in Outlook:",
+                instructionsText: "1. Copy the signature using the button above<br>2. Open Outlook → File → Options → Mail → Signatures<br>3. Create a new signature and paste the HTML code<br>4. Set as default for new messages and replies",
+                tutorialTitle: "How to create a Rainbow bubble?",
+                btnTutorial: "View Tutorial",
+                slidePrev: "Previous",
+                slideNext: "Next",
+                tutorialSlides: [
+                    {
+                        title: "First Step: Name the Bubble",
+                        description: "Give a name and a subject (optional) to your new bubble, then click 'Next'."
+                    },
+                    {
+                        title: "Second Step: Invite Participants",
+                        description: "Search and add members of your team or external contacts to your bubble (In our case, no person will be added)."
+                    },
+                    {
+                        title: "Third Step: Access Settings",
+                        description: "Open the options menu (•••), then select 'Bubble Settings'. After 'Clean the Bubble'"
+                    },
+                    {
+                        title: "Fourth Step: Automatic Cleanup",
+                        description: "In the Automatic Cleanup tab, make sure to check the activation of automatic cleanup."
+                    },
+                    {
+                        title: "Fifth Step: Get the Sharing Link",
+                        description: "In the 'Share' tab, copy the public link to add to your signature."
+                    }
+                ]
+            },
+            de: {
+                headerTitle: "Dynamischer E-Mail-Signatur-Generator",
+                headerSubtitle: "Erstellen Sie eine dynamische Signatur, erhalten Sie eine direkte Verbindung zu Ihren Kunden über Rainbow.",
+                languageLabel: "Wählen Sie Ihre Sprache:",
+                formTitle: "👤 Persönliche Informationen",
+                labelName: "Vollständiger Name *",
+                labelJob: "Berufsbezeichnung *",
+                labelPhone: "Haupttelefon",
+                labelEmail: "E-Mail",
+                labelMeeting: "OpenRainbow Meetingraum-URL",
+                btnGenerate: "HTML-Code generieren",
+                previewTitle: "📋 Live-Vorschau",
+                placeholderName: "[Ihr vollständiger Name]",
+                placeholderJob: "[Ihre Berufsbezeichnung]",
+                btnCopy: "📋 HTML-Code kopieren",
+                btnCopied: "✅ Kopiert!",
+                instructionsTitle: "So verwenden Sie in Outlook:",
+                instructionsText: "1. Kopieren Sie die Signatur mit der Schaltfläche oben<br>2. Öffnen Sie Outlook → Datei → Optionen → E-Mail → Signaturen<br>3. Erstellen Sie eine neue Signatur und fügen Sie den HTML-Code ein<br>4. Als Standard für neue Nachrichten und Antworten festlegen",
+                tutorialTitle: "Wie erstellt man eine Rainbow-Blase?",
+                btnTutorial: "Tutorial anzeigen",
+                slidePrev: "Zurück",
+                slideNext: "Weiter",
+                tutorialSlides: [
+                    {
+                        title: "Erster Schritt: Blase benennen",
+                        description: "Geben Sie Ihrer neuen Blase einen Namen und ein Thema (optional), klicken Sie dann auf 'Weiter'."
+                    },
+                    {
+                        title: "Zweiter Schritt: Teilnehmer einladen",
+                        description: "Suchen und fügen Sie Mitglieder Ihres Teams oder externe Kontakte zu Ihrer Blase hinzu (In unserem Fall wird keine Person hinzugefügt)."
+                    },
+                    {
+                        title: "Dritter Schritt: Einstellungen aufrufen",
+                        description: "Öffnen Sie das Optionsmenü (•••) und wählen Sie dann 'Blaseneinstellungen'. Danach 'Blase reinigen'"
+                    },
+                    {
+                        title: "Vierter Schritt: Automatische Reinigung",
+                        description: "Aktivieren Sie im Tab Automatische Reinigung die automatische Reinigung."
+                    },
+                    {
+                        title: "Fünfter Schritt: Freigabelink erhalten",
+                        description: "Kopieren Sie im Tab 'Teilen' den öffentlichen Link, um ihn zu Ihrer Signatur hinzuzufügen."
+                    }
+                ]
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
-            // --- SCRIPT DE MISE À JOUR DE L'APERÇU ---
             const inputs = document.querySelectorAll('.form-section input');
             const copyButton = document.getElementById('copyButton');
+            const languageSelect = document.getElementById('languageSelect');
             let generatedSignatureHTML = '';
+            let currentLang = 'fr';
+
+            // LANGUAGE SWITCHING
+            function updateLanguage(lang) {
+                currentLang = lang;
+                const t = translations[lang];
+                
+                document.getElementById('headerTitle').textContent = t.headerTitle;
+                document.getElementById('headerSubtitle').textContent = t.headerSubtitle;
+                document.getElementById('languageLabel').textContent = t.languageLabel;
+                document.getElementById('formTitle').innerHTML = t.formTitle;
+                document.getElementById('labelName').textContent = t.labelName;
+                document.getElementById('labelJob').textContent = t.labelJob;
+                document.getElementById('labelPhone').textContent = t.labelPhone;
+                document.getElementById('labelEmail').textContent = t.labelEmail;
+                document.getElementById('labelMeeting').textContent = t.labelMeeting;
+                document.getElementById('btnGenerate').textContent = t.btnGenerate;
+                document.getElementById('previewTitle').innerHTML = t.previewTitle;
+                document.getElementById('btnCopy').textContent = t.btnCopy;
+                document.getElementById('instructionsTitle').textContent = t.instructionsTitle;
+                document.getElementById('instructionsText').innerHTML = t.instructionsText;
+                document.getElementById('tutorialTitle').textContent = t.tutorialTitle;
+                document.getElementById('btnTutorial').textContent = t.btnTutorial;
+                document.getElementById('prevSlideBtn').textContent = t.slidePrev;
+                document.getElementById('nextSlideBtn').textContent = t.slideNext;
+                
+                updatePreview();
+            }
+
+            languageSelect.addEventListener('change', (e) => {
+                updateLanguage(e.target.value);
+            });
 
             function updatePreview() {
+                const t = translations[currentLang];
                 const fullName = document.getElementById('fullName').value.trim();
                 const jobTitle = document.getElementById('jobTitle').value.trim();
                 const phone1 = document.getElementById('phone1').value.trim();
-                const phone2 = document.getElementById('phone2').value.trim();
+                const email = document.getElementById('email').value.trim();
                 const meetingRoom = document.getElementById('meetingRoom').value.trim();
 
-                // Mettre à jour le nom
                 const nameEl = document.getElementById('preview-name');
-                nameEl.textContent = fullName || "[Votre Nom Complet]";
+                nameEl.textContent = fullName || t.placeholderName;
                 nameEl.classList.toggle('placeholder-text', !fullName);
 
-                // Mettre à jour le titre du poste
                 const titleEl = document.getElementById('preview-title');
-                titleEl.textContent = jobTitle || "[Votre Intitulé de Poste]";
+                titleEl.textContent = jobTitle || t.placeholderJob;
                 titleEl.classList.toggle('placeholder-text', !jobTitle);
 
-                // Mettre à jour les téléphones
                 document.getElementById('preview-phone1').textContent = phone1;
                 document.getElementById('preview-phone1-container').style.display = phone1 ? 'inline' : 'none';
-                document.getElementById('preview-phone2').textContent = phone2;
-                document.getElementById('preview-phone2-container').style.display = phone2 ? 'inline' : 'none';
                 
-                // Mettre à jour le lien Rainbow
+                document.getElementById('preview-email').textContent = email;
+                document.getElementById('preview-email-container').style.display = email ? 'inline' : 'none';
+                
                 const rainbowContainer = document.getElementById('preview-rainbow-container');
                 if (meetingRoom) {
                     rainbowContainer.style.display = 'block';
@@ -363,11 +716,9 @@
                     rainbowContainer.style.display = 'none';
                 }
 
-                // Activer le bouton copier si les champs obligatoires sont remplis
                 copyButton.disabled = !(fullName && jobTitle);
             }
 
-            // Écouteur pour la mise à jour en direct
             let debounceTimer;
             inputs.forEach(input => {
                 input.addEventListener('input', () => {
@@ -376,16 +727,15 @@
                 });
             });
 
-            // Action du bouton "Copier"
             copyButton.addEventListener('click', async () => {
+                const t = translations[currentLang];
                 generatedSignatureHTML = document.getElementById('signaturePreview').innerHTML;
                 if (!generatedSignatureHTML) {
-                    alert('Veuillez d\'abord remplir les champs.');
+                    alert('Please fill in the fields first.');
                     return;
                 }
                 
                 try {
-                    // Méthode 1: Copier en tant que HTML formaté
                     if (navigator.clipboard && window.ClipboardItem) {
                         const htmlBlob = new Blob([generatedSignatureHTML], { type: 'text/html' });
                         const textBlob = new Blob([generatedSignatureHTML], { type: 'text/plain' });
@@ -395,7 +745,6 @@
                         });
                         await navigator.clipboard.write([clipboardItem]);
                     } else {
-                        // Méthode 2: Fallback avec sélection directe du contenu HTML
                         const tempDiv = document.createElement('div');
                         tempDiv.innerHTML = generatedSignatureHTML;
                         tempDiv.style.position = 'fixed';
@@ -418,24 +767,19 @@
                         }
                     }
                     
-                    const successMessage = document.getElementById('successMessage');
-                    copyButton.textContent = '✅ Copié !';
+                    copyButton.querySelector('span').textContent = t.btnCopied;
                     copyButton.classList.add('copied');
-                    successMessage.style.display = 'block';
                     
                     setTimeout(() => {
-                        copyButton.textContent = '📋 Copier le code HTML';
+                        copyButton.querySelector('span').textContent = t.btnCopy;
                         copyButton.classList.remove('copied');
-                        successMessage.style.display = 'none';
                     }, 3000);
                 } catch (err) {
-                    console.error('Erreur de copie: ', err);
-                    // Méthode 3: Copie manuelle avec instructions
+                    console.error('Copy error: ', err);
                     showManualCopyInstructions();
                 }
             });
 
-            // Fonction pour afficher les instructions de copie manuelle
             function showManualCopyInstructions() {
                 const modal = document.createElement('div');
                 modal.style.cssText = `
@@ -451,19 +795,19 @@
                 `;
                 
                 content.innerHTML = `
-                    <h3 style="color: #5726B6; margin-bottom: 20px;">Copie manuelle requise</h3>
+                    <h3 style="color: #5726B6; margin-bottom: 20px;">Manual copy required</h3>
                     <p style="margin-bottom: 20px; color: #555;">
-                        Pour copier votre signature avec le formatage HTML, veuillez suivre ces étapes:
+                        To copy your signature with HTML formatting, please follow these steps:
                     </p>
                     <ol style="text-align: left; margin-bottom: 20px; color: #555;">
-                        <li>Sélectionnez tout le contenu dans l'aperçu ci-dessous avec votre souris</li>
-                        <li>Faites Ctrl+C (ou Cmd+C sur Mac) pour copier</li>
-                        <li>Collez directement dans Outlook ou votre client email</li>
+                        <li>Select all content in the preview below with your mouse</li>
+                        <li>Press Ctrl+C (or Cmd+C on Mac) to copy</li>
+                        <li>Paste directly into Outlook or your email client</li>
                     </ol>
                     <button id="closeManualModal" style="
                         background: #5726B6; color: white; border: none; padding: 10px 20px;
                         border-radius: 5px; cursor: pointer; font-size: 16px;
-                    ">Compris</button>
+                    ">Got it</button>
                 `;
                 
                 modal.appendChild(content);
@@ -480,10 +824,9 @@
                 };
             }
 
-            // Lancer une première mise à jour pour cacher les éléments optionnels vides
             updatePreview();
 
-            // --- SCRIPT POUR LE TUTORIEL ---
+            // TUTORIAL MODAL
             const modal = document.getElementById('tutorialModal');
             const openBtn = document.getElementById('openTutorialBtn');
             const closeBtn = modal.querySelector('.modal-close-btn');
@@ -493,38 +836,21 @@
             const slideCounter = document.getElementById('slideCounter');
             let currentSlide = 0;
 
-            const slidesData = [
-                {
-                    title: "Première étape : Nommer la bulle",
-                    description: "Donnez un nom et un sujet (optionnel) à votre nouvelle bulle, puis cliquez sur 'Suivant'.",
-                    imgSrc: "name.png"
-                },
-                {
-                    title: "Deuxième étape : Inviter des participants",
-                    description: "Recherchez et ajoutez les membres de votre équipe ou des contacts externes à votre bulle (Dans notre cas, aucune personne ne sera ajoutée).",
-                    imgSrc: "add.png"
-                },{
-                    title: "Troisième étape : Accéder aux paramètres",
-                    description: "Ouvrez le menu des options (•••), puis sélectionnez 'Paramètres de cette bulle'. Apres 'Nettoyer la bulle'",
-                    imgSrc: "clean.png"
-                },{
-                    title: "Quatrième étape : Nettoyage automatique",
-                    description: "Dans l'onglet Nettoyage Automatique, pensez à cocher l'activation du nettoyage automatique.",
-                    imgSrc: "clean-aut.png"
-                },
-                {
-                    title: "Cinquième étape : Obtenir le lien de partage",
-                    description: "Dans l'onglet 'Partager', copiez le lien public pour l'ajouter à votre signature.",
-                    imgSrc: "attente.png"
-                }
+            const slidesImages = [
+                "img/name.png",
+                "img/add.png",
+                "img/clean.png",
+                "img/clean-aut.png",
+                "img/attente.png"
             ];
 
             function renderSlides() {
-                slider.innerHTML = slidesData.map(data => `
+                const t = translations[currentLang];
+                slider.innerHTML = t.tutorialSlides.map((data, index) => `
                     <div class="slide">
                         <h4>${data.title}</h4>
                         <p>${data.description}</p>
-                        <img src="${data.imgSrc}" alt="${data.title}">
+                        <img src="${slidesImages[index]}" alt="${data.title}">
                     </div>
                 `).join('');
             }
@@ -536,7 +862,11 @@
                 slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
             }
 
-            openBtn.addEventListener('click', () => { modal.classList.add('active'); showSlide(0); });
+            openBtn.addEventListener('click', () => { 
+                renderSlides(); // Re-render slides with current language
+                modal.classList.add('active'); 
+                showSlide(0); 
+            });
             closeBtn.addEventListener('click', () => modal.classList.remove('active'));
             modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
             nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
